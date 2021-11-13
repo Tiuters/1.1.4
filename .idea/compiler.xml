@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="TaskJDBC" />
         <module name="CoreTaskTemplate" />
+        <module name="1.1.4" />
       </profile>
     </annotationProcessing>
   </component>
