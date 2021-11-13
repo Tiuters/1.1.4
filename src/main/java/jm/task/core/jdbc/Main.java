@@ -15,17 +15,17 @@ public class Main {
 
         UserService userService = new UserServiceImpl();
 
-
         userService.createUsersTable();
-        userService.saveUser("fff", "ggg", (byte) 45);
 
-        List<User> toPr = userService.getAllUsers();
-        System.out.println(toPr);
-
-        userService.dropUsersTable();
-
-        List<User> toPr2 = userService.getAllUsers();
-        System.out.println(toPr2);
+//        userService.saveUser("fff", "ggg", (byte) 45);
+//
+//        List<User> toPr = userService.getAllUsers();
+//        System.out.println(toPr);
+//
+//        userService.dropUsersTable();
+//
+//        List<User> toPr2 = userService.getAllUsers();
+//        System.out.println(toPr2);
 
     }
 }

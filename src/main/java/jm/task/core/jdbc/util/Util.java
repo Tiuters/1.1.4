@@ -1,24 +1,29 @@
 package jm.task.core.jdbc.util;
 
+import jm.task.core.jdbc.model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.metamodel.Metadata;
 import org.hibernate.metamodel.MetadataSources;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class Util {
-    private static String dbURL = "jdbc:mysql://localhost:3306/pp1_schema"; //?autoReconnect=true&useSSL=false
+    private static String dbURL = "jdbc:mysql://localhost:3306/pp1_schema";
     private static String dbUsername = "root";
     private static String dbPassword = "ert45dfc67";
-    private static StandardServiceRegistry standardServiceRegistry;
     private static SessionFactory sessionFactory;
+    private static ServiceRegistry serviceRegistry;
 
     public static Connection getConnection() {
         Connection connection = null;
@@ -31,28 +36,23 @@ public class Util {
         return connection;
     }
 
-
     static {
-        StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
+        Properties prop = new Properties();
 
-        Map<String, String> dbSettings = new HashMap<>();
-        dbSettings.put(Environment.URL, "jdbc:mysql://localhost:3306/sch_forhiber");
-        dbSettings.put(Environment.USER, "hiber");
-        dbSettings.put(Environment.PASS, "hiber");
-        dbSettings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
-        dbSettings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
+        prop.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/sch_forhiber");
+        prop.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
+        prop.setProperty("hibernate.connection.username", "hiber");
+        prop.setProperty("hibernate.connection.password", "hiber");
+        prop.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
 
-        registryBuilder.applySettings(dbSettings);
-        standardServiceRegistry = registryBuilder.build();
-        MetadataSources sources = new MetadataSources(standardServiceRegistry);
-        Metadata metadata = sources.getMetadataBuilder().build();
-        sessionFactory = metadata.getSessionFactoryBuilder().build();
+        Configuration configuration = new Configuration();
+        serviceRegistry = new StandardServiceRegistryBuilder().applySettings(prop).build();
+        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
     }
 
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
-
 }
 
 
