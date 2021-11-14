@@ -23,7 +23,6 @@ public class Util {
     private static String dbUsername = "root";
     private static String dbPassword = "ert45dfc67";
 
-
     public static Connection getConnection() {
         Connection connection = null;
 
@@ -35,27 +34,21 @@ public class Util {
         return connection;
     }
 
-    private static SessionFactory sessionFactory = null;
-
     public static SessionFactory getSessionFactory() {
-        try {
-            Configuration configuration = new Configuration();
-            Properties prop = new Properties();
+        SessionFactory sessionFactory = null;
+        Properties prop = new Properties();
 
-            prop.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/sch_forhiber");
-            prop.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
-            prop.setProperty("hibernate.connection.username", "hiber");
-            prop.setProperty("hibernate.connection.password", "hiber");
-            prop.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
+        prop.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/sch_forhiber");
+        prop.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
+        prop.setProperty("hibernate.connection.username", "hiber");
+        prop.setProperty("hibernate.connection.password", "hiber");
+        prop.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
+        prop.setProperty("hibernate.show_sql", "true");
 
-            configuration.setProperties(prop);
-            configuration.addAnnotatedClass(User.class);
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .applySettings(prop).build();
-            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        sessionFactory = new Configuration().addAnnotatedClass(User.class)
+            .buildSessionFactory(new StandardServiceRegistryBuilder()
+                .applySettings(prop).build());
+
         return sessionFactory;
     }
 }
