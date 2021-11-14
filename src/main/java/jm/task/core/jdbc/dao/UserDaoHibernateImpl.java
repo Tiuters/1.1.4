@@ -26,7 +26,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
         query.executeUpdate();
         transaction.commit();
-        session.close();
+ //       session.close();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
         query.executeUpdate();
         transaction.commit();
-        session.close();
+//        session.close();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class UserDaoHibernateImpl implements UserDao {
         session.beginTransaction();
         session.save(user);
         session.getTransaction().commit();
-        session.close();
+//        session.close();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class UserDaoHibernateImpl implements UserDao {
         session.createQuery("delete User where id = :x")
             .setLong("x", id).executeUpdate();
         session.getTransaction().commit();
-        session.close();
+//        session.close();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class UserDaoHibernateImpl implements UserDao {
         session.beginTransaction();
         List<User> users = session.createQuery("FROM User").list();
         session.getTransaction().commit();
-        session.close();
+//        session.close();
         return users;
     }
 
@@ -80,6 +80,6 @@ public class UserDaoHibernateImpl implements UserDao {
         session.beginTransaction();
         session.createQuery("DELETE FROM User").executeUpdate();
         session.getTransaction().commit();
-        session.close();
+//        session.close();
     }
 }
