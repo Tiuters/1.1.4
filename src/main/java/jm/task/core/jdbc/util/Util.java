@@ -29,7 +29,7 @@ public class Util {
         try {
             connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Connection Failed : " + e.getMessage());
         }
         return connection;
     }
@@ -45,9 +45,14 @@ public class Util {
         prop.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
         prop.setProperty("hibernate.show_sql", "true");
 
-        sessionFactory = new Configuration().addAnnotatedClass(User.class)
-            .buildSessionFactory(new StandardServiceRegistryBuilder()
-                .applySettings(prop).build());
+        try {
+            sessionFactory = new Configuration().addAnnotatedClass(User.class)
+                .buildSessionFactory(new StandardServiceRegistryBuilder()
+                    .applySettings(prop).build());
+        } catch (HibernateException e) {
+            System.err.println("Failed to create sessionFactory object." + e);
+            e.printStackTrace();
+        }
 
         return sessionFactory;
     }
